@@ -23,7 +23,18 @@ pipeline {
     }
   }
   post {
-    success { echo 'Pipeline SUCCESS' }
-    failure { echo 'Pipeline FAILED' }
+  success {
+    echo 'Pipeline SUCCESS'
+    publishHTML([allowMissing: false,
+                 alwaysLinkToLastBuild: true,
+                 keepAll: true,
+                 reportDir: 'target/surefire-reports',
+                 reportFiles: 'TEST-com.example.calculator.CalculatorTest.xml',
+                 reportName: 'Test Report'])
   }
+  failure {
+    echo 'Pipeline FAILED'
+    }
+  }
+
 }
